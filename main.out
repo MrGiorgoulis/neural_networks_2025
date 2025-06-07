@@ -25,20 +25,18 @@
 \BOOKMARK [2][-]{subsection.4.6.3}{greekenglishRecall}{section.4.6}% 25
 \BOOKMARK [2][-]{subsection.4.6.4}{greekenglishF1 Score}{section.4.6}% 26
 \BOOKMARK [2][-]{subsection.4.6.5}{greekenglishmAP Over Epochs}{section.4.6}% 27
-\BOOKMARK [0][-]{chapter.5}{greekgreek }{}% 28
-\BOOKMARK [1][-]{section.5.1}{greekenglishYOLOv8n}{chapter.5}% 29
-\BOOKMARK [1][-]{section.5.2}{greekenglishYOLOv11n}{chapter.5}% 30
-\BOOKMARK [1][-]{section.5.3}{greekenglishYOLOv11m}{chapter.5}% 31
-\BOOKMARK [1][-]{section.5.4}{greekenglishDetectron2 R-CNN}{chapter.5}% 32
-\BOOKMARK [0][-]{chapter.6}{greekgreek -\265}{}% 33
-\BOOKMARK [1][-]{section.6.1}{greekgreek\265 \265 \040}{chapter.6}% 34
-\BOOKMARK [1][-]{section.6.2}{englishgreek }{chapter.6}% 35
-\BOOKMARK [1][-]{section.6.3}{englishgreek \040}{chapter.6}% 36
-\BOOKMARK [1][-]{section.6.4}{englishgreek \040}{chapter.6}% 37
-\BOOKMARK [0][-]{chapter.7}{greekgreek \040 }{}% 38
-\BOOKMARK [1][-]{section.7.1}{greekgreek }{chapter.7}% 39
-\BOOKMARK [1][-]{section.7.2}{greekgreek }{chapter.7}% 40
-\BOOKMARK [2][-]{subsection.7.2.1}{greekenglishAccuracy}{section.7.2}% 41
-\BOOKMARK [2][-]{subsection.7.2.2}{greekenglishPrecision}{section.7.2}% 42
-\BOOKMARK [2][-]{subsection.7.2.3}{greekenglishRecall}{section.7.2}% 43
-\BOOKMARK [2][-]{subsection.7.2.4}{greekenglishF1 Score}{section.7.2}% 44
+\BOOKMARK [2][-]{subsection.4.6.6}{greekenglishAP \(Average Precision\)}{section.4.6}% 28
+\BOOKMARK [2][-]{subsection.4.6.7}{greekenglishAP50}{section.4.6}% 29
+\BOOKMARK [2][-]{subsection.4.6.8}{greekenglishAP75}{section.4.6}% 30
+\BOOKMARK [2][-]{subsection.4.6.9}{greekenglishAPl \(AP large\)}{section.4.6}% 31
+\BOOKMARK [2][-]{subsection.4.6.10}{greekenglishAPm \(AP medium\)}{section.4.6}% 32
+\BOOKMARK [2][-]{subsection.4.6.11}{greekenglishAPs \(AP small\)}{section.4.6}% 33
+\BOOKMARK [0][-]{chapter.5}{greekgreek }{}% 34
+\BOOKMARK [1][-]{section.5.1}{greekenglishYOLOv8n}{chapter.5}% 35
+\BOOKMARK [1][-]{section.5.2}{greekenglishYOLOv11n}{chapter.5}% 36
+\BOOKMARK [1][-]{section.5.3}{greekenglishYOLOv11m}{chapter.5}% 37
+\BOOKMARK [1][-]{section.5.4}{greekenglishDetectron2 R-CNN}{chapter.5}% 38
+\BOOKMARK [0][-]{chapter.6}{greekgreek}{}% 39
+\BOOKMARK [1][-]{section.6.1}{greekgreek\265 \265 \040}{chapter.6}% 40
+\BOOKMARK [1][-]{section.6.2}{englishgreek \040}{chapter.6}% 41
+\BOOKMARK [1][-]{section.6.3}{englishgreek \040}{chapter.6}% 42

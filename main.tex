@@ -28,13 +28,33 @@
 \newcommand{\en}{\selectlanguage{english}}
 \setlength{\arrayrulewidth}{0.4mm}
 
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codeblue}{rgb}{0,0,1}
 \definecolor{babypink}{RGB}{255, 230, 240} % very soft pink
 \definecolor{lightorange}{RGB}{255,240,220}
 \definecolor{lightyellow}{RGB}{255, 255, 204}
 \definecolor{babyblue}{RGB}{220, 240, 255}
+
+\definecolor{codegray}{gray}{0.95}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+\definecolor{darkred}{rgb}{0.6,0.0,0.0}
+
+\lstdefinestyle{fancy}{
+	backgroundcolor=\color{codegray},
+	commentstyle=\color{darkgreen}\ttfamily,
+	keywordstyle=\color{darkblue}\bfseries,
+	stringstyle=\color{darkred},
+	numberstyle=\tiny\color{gray},
+	basicstyle=\ttfamily\footnotesize,
+	breaklines=true,
+	columns=fullflexible,
+	numbers=left,
+	numbersep=5pt,
+	captionpos=b,
+	language=Python,
+	morekeywords={model,train,data,epochs,imgsz,batch,project,name,exist\_ok,optimizer,lr0,patience,amp,hsv\_h,hsv\_s,hsv\_v,degrees,scale,shear,perspective,flipud,fliplr,mosaic,mixup,copy\_paste,auto\_augment},
+}
 \lstdefinestyle{mystyle}{
 	backgroundcolor=\color{white},   
 	commentstyle=\color{codegreen},
@@ -352,6 +372,35 @@
 	\item \gr Το $mAP@0.5$ υπολογίζει την ακρίβεια για \en \textbf{IoU} \gr τουλάχιστον 0.5, επιτρέποντας σχετικά χαλαρή ευθυγράμμιση.
 	\item \gr Το $mAP@0.5:0.95$ είναι ο μέσος όρος των \en \textbf{AP} \gr που υπολογίζονται για \en \textbf{IoU} \gr από 0.5 έως 0.95 σε βήματα 0.05, παρέχοντας πιο αυστηρή και ολοκληρωμένη αξιολόγηση.
 \end{itemize}
+\subsection{\en AP (Average Precision)}
+\paragraph{\textnormal{
+\gr Η \en \textbf{AP} \gr είναι η βασική μετρική αξιολόγησης που χρησιμοποιείται στο \en \textbf{Detectron2} \gr και αντιπροσωπεύει τη μέση ακρίβεια του μοντέλου για διαφορετικά κατώφλια \en \textbf{IoU}, \gr από 0.5 έως 0.95 με βήμα 0.05. Αποτελεί έναν συνολικό δείκτη απόδοσης, ενσωματώνοντας τόσο το \en \textbf{precision} \gr όσο και το \en \textbf{recall} \gr σε διάφορα επίπεδα απαιτούμενης επικάλυψης μεταξύ προβλεπόμενων και πραγματικών πλαισίων.
+}}
+
+\subsection{\en AP50}
+\paragraph{\textnormal{
+\gr Η \en \textbf{AP50} \gr μετρά την ακρίβεια των προβλέψεων όταν το ελάχιστο αποδεκτό ποσοστό επικάλυψης μεταξύ πραγματικού και προβλεπόμενου πλαισίου είναι 50\%. Πρόκειται για μια πιο επιεική εκδοχή της \en \textbf{AP} \gr και δείχνει πόσο καλά εντοπίζονται τα αντικείμενα, χωρίς απαραίτητα να απαιτείται υψηλή ακρίβεια στο περίγραμμά τους.
+}}
+
+\subsection{\en AP75}
+\paragraph{\textnormal{
+\gr Η \en \textbf{AP75} \gr είναι μια αυστηρότερη παραλλαγή, όπου η ακρίβεια υπολογίζεται μόνο αν το \en \textbf{IoU} \gr ξεπερνά το 75\%. Εστιάζει στον ακριβή εντοπισμό και χρησιμοποιείται συχνά για να αξιολογηθεί η λεπτομέρεια στην πρόβλεψη των \en \textbf{bounding boxes}.
+}}
+
+\subsection{\en APl (AP large)}
+\paragraph{\textnormal{
+\gr Η \en \textbf{APl} \gr αξιολογεί την απόδοση του μοντέλου σε μεγάλα αντικείμενα. Εδώ εξετάζεται αν το μοντέλο μπορεί να εντοπίζει σωστά και με ακρίβεια αντικείμενα μεγαλύτερων διαστάσεων, όπου συνήθως υπάρχουν περισσότερα οπτικά στοιχεία για να αξιοποιηθούν.
+}}
+
+\subsection{\en APm (AP medium)}
+\paragraph{\textnormal{
+\gr Η \en \textbf{APm} \gr μετρά την ακρίβεια για αντικείμενα μεσαίου μεγέθους. Είναι κρίσιμη σε πολλές ιατρικές εφαρμογές, όπου οι βλάβες δεν είναι ούτε πολύ μικρές ούτε μεγάλες αλλά απαιτούν ακρίβεια εντοπισμού.
+}}
+
+\subsection{\en APs (AP small)}
+\paragraph{\textnormal{
+\gr Η \en \textbf{APs} \gr εστιάζει στα μικρού μεγέθους αντικείμενα. Πρόκειται για την πιο απαιτητική υποκατηγορία, καθώς η εντόπιση μικρών αντικειμένων είναι συνήθως δύσκολη λόγω περιορισμένων χαρακτηριστικών και χαμηλής ανάλυσης.
+}}
 
 \chapter{\gr Επιλογή Μοντέλων}
 \paragraph{\textnormal{
@@ -374,10 +423,9 @@
 \gr Το \en \textbf{Detectron2 R-CNN} \gr είναι μια σύγχρονη και ευέλικτη υλοποίηση της αρχιτεκτονικής \en R-CNN, \gr αναπτυγμένη από το \en Facebook AI Research \gr ως η επόμενη γενιά της δημοφιλούς βιβλιοθήκης \en Detectron. \gr Υποστηρίζει πολλές παραλλαγές, όπως τις \en Faster R-CNN, Mask R-CNN, Cascade R-CNN \gr και χρησιμοποιεί \en Feature Pyramid Networks (FPN) \gr για βελτιωμένη αναγνώριση αντικειμένων σε διαφορετικές κλίμακες. \gr Το \en \textbf{Detectron2} \gr βελτιώνει σημαντικά την αποδοτικότητα μέσω μοντέρνων βελτιώσεων στην αρχιτεκτονική, όπως \en batch normalization, \en multi-scale training \gr και εκμεταλλεύεται πλήρως τις δυνατότητες των σύγχρονων \en GPU \gr για ταχύτατη εκπαίδευση και \en inference. \gr Παράλληλα, διατηρεί υψηλή ακρίβεια στον εντοπισμό και την ταξινόμηση αντικειμένων, καθιστώντας το ιδανικό για ερευνητικές αλλά και βιομηχανικές εφαρμογές όπου απαιτείται αξιοπιστία και ταχύτητα. Χρησιμοποιείται συχνά ως σημείο αναφοράς για σύγκριση με άλλες σύγχρονες αρχιτεκτονικές, όπως το \en YOLO, \gr λόγω της ισορροπίας του μεταξύ απόδοσης και υπολογιστικής πολυπλοκότητας. \cite{wuDetectron22019}
 }}
 
-\chapter{\gr Βελτιστοποίηση Υπερ-παραμέτρων}
+\chapter{\gr Μεθοδολογία}
 \paragraph{\textnormal{
-\gr Η διαδικασία βελτιστοποίησης υπερ-παραμέτρων \en (\textbf{hyperparameter tuning}) \gr πραγματοποιήθηκε για να εξασφαλιστεί η βέλτιστη απόδοση του κάθε μοντέλου. Για το σκοπό αυτό, εφαρμόστηκε η τεχνική \en \textbf{Randomized Search Cross-Validation} \gr σε συνδυασμό με την κλιμάκωση των χαρακτηριστικών \en (\textbf{Standard Scaling}) \gr και τη μέθοδο \en \textbf{Stratified K-Fold Cross-Validation} \gr με 5 υποσύνολα.
-Σε κάθε \en fold, \gr τα δεδομένα χωρίστηκαν περαιτέρω σε \en \textbf{train} \gr κατά ($90\%$) και \en \textbf{test} \gr κατά ($10\%$) με τυχαία δειγματοληψία. Αυτό διασφαλίζει την ισορροπία των κατηγοριών και την αξιοπιστία της αξιολόγησης.
+\gr Η διαδικασία βελτιστοποίησης υπερ-παραμέτρων \en (\textbf{hyperparameter tuning}) \gr πραγματοποιήθηκε για να εξασφαλιστεί η βέλτιστη απόδοση του κάθε μοντέλου. Για το σκοπό αυτό, εφαρμόστηκε η τεχνική  \en \textbf{K-Fold Cross-Validation} \gr με 5 υποσύνολα. Σε κάθε επανάληψη \en (\textbf{fold}), \gr το μοντέλο εκπαιδεύεται χρησιμοποιώντας τα $\frac{4}{5}$ του συνόλου των δεδομένων, ενώ το υπόλοιπο $\frac{1}{5}$ χρησιμοποιείται για την επικύρωση \en (\textbf{validation}). \gr Η διαδικασία αυτή επαναλαμβάνεται πέντε φορές, ώστε κάθε υποσύνολο του \en \textbf{dataset} \gr να χρησιμοποιηθεί ακριβώς μία φορά ως \en \textbf{validation set}. \gr Μετά την ολοκλήρωση της εκπαίδευσης, επιλέγεται το καλύτερο μοντέλο βάσει των επιδόσεών του και αξιολογείται τελικά στο \en \textbf{test set}.
 }}
 \section{\gr Ορισμός Υπερπαραμέτρων και Εκπαίδευσης}\vspace{-4em}
 \paragraph{\textnormal{
@@ -386,7 +434,7 @@
 \vspace{3\baselineskip}
 \paragraph{}
 \selectlanguage{english}
-\begin{lstlisting}[caption=Training of YOLOv8 model per fold]
+\begin{lstlisting}[style=fancy,caption=Training of YOLOv11 model per fold]
 	model.train(
 		data=yaml_path,
 		epochs=60,
@@ -414,18 +462,13 @@
 \end{lstlisting}
 
 
-\section{\gr Εισαγωγή Τυχαιότητας}
-\paragraph{\textnormal{
-\gr Παρότι δεν εφαρμόστηκε \en \textbf{explicit Randomized Search}, \gr η τυχαία δειγματοληψία των δεδομένων και η χρήση διαφορετικών \en \textbf{splits} \gr σε κάθε \en fold \gr χρησιμοποιήθηκε ως πρακτική βελτιστοποίησης, για να μειωθεί σε σχέση με το \en \textbf{ Grid Search}.
-}}
-
 \section{\gr Εκπαίδευση και Αξιολόγηση}
 \paragraph{\textnormal{
-\gr Σε κάθε επανάληψη του \en \textbf{cross-validation}, \gr το μοντέλο εκπαιδεύεται και αξιολογείται μετρώντας τις μετρικές, όπως αναγράφονται στο παρακάτω τμήμα κώδικα.
+\gr Σε κάθε επανάληψη του \en \textbf{cross-validation} \gr και για κάθε \en fold \gr το μοντέλο εκπαιδεύεται και αξιολογείται μετρώντας τις μετρικές που περιγράφηκαν στο Κεφάλαιο 4, όπως αναγράφονται στο παρακάτω τμήμα κώδικα. Τα αποτελέσματα του κάθε \en fold \gr αποθηκεύονται σε μία λίστα αρχικά και τελικά σε ένα αρχείο \en \textbf{csv}.	
 }}
 \paragraph{}
 \begin{lstlisting}
-	results = model.val(iou=0.5)
+
 	metrics = {
 		'precision': float(results.box.p.mean()),
 		'recall': float(results.box.r.mean()),
@@ -433,18 +476,18 @@
 		'map': float(results.box.map.mean()),
 		'f1': float(results.box.f1.mean())
 	}
+	
+	fold_results.append({
+		'Fold': fold_num,
+		'Precision': round(metrics['precision'], 4),
+		'Recall': round(metrics['recall'], 4),
+		'mAP@0.5': round(metrics['map50'], 4),
+		'mAP@0.5:0.95': round(metrics['map'], 4),
+		'F1': round(metrics['f1'], 4)
+	})
 \end{lstlisting}
 \paragraph{\textnormal{
-\gr Τα αποτελέσματα του κάθε \en fold \gr αποθηκεύονται σε μία λίστα αρχικά και τελικά σε ένα αρχείο \en \textbf{csv}.	
-}}
-\paragraph{}
-\begin{lstlisting}
-	df = pd.DataFrame(fold_results)
-	df.loc['Mean'] = df.mean(numeric_only=True)
-	df.to_csv(results_csv, index=False)
-\end{lstlisting}
-\paragraph{\textnormal{
-\gr Έτσι διασφαλίζεται η αναλυτική καταγραφή των αποτελεσμάτων και η δυνατότητα σύγκρισης.
+\gr Έτσι διασφαλίζεται η αναλυτική καταγραφή των αποτελεσμάτων και η δυνατότητα σύγκρισης τους σε μορφή τέτοια, όπως για παράδειγμα ο Πίνακας 6.1.
 }}
 \begin{center}
 	\begin{tabular}{|c|c|c|c|c|c|}
@@ -467,6 +510,44 @@
 	\gr 
 	\captionof{table}{\gr Αρχείο \en csv \gr για το μοντέλο \en YOLOv8n}
 \end{center}
+\paragraph{\textnormal{
+\gr Στην περίπτωση του \en \textbf{Detectron2 R-CNN}, \gr η διαδικασία υπολογισμού των μετρικών διαφέρει από άλλες υλοποιήσεις. Στο παρακάτω πίνακα (Πίνακα 6.2), παρουσιάζονται αναλυτικά ο υπολογισμός των μετρικών απόδοσης για το συγκεκριμένο μοντέλο, για το \en Fold 1. 
+}}
+\paragraph{}
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		\cellcolor[HTML]{CCE5E5} \en \textbf{Iteration} &
+		\cellcolor[HTML]{CCE5E5} \en \textbf{AP} &
+		\cellcolor[HTML]{CCE5E5} \en \textbf{AP50} &
+		\cellcolor[HTML]{CCE5E5} \en \textbf{AP75} &
+		\cellcolor[HTML]{CCE5E5} \en \textbf{APl} &
+		\cellcolor[HTML]{CCE5E5} \en \textbf{APm} &
+		\cellcolor[HTML]{CCE5E5} \en \textbf{APs} \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} 624 & \cellcolor[HTML]{E6F2E6} 10.81 & \cellcolor[HTML]{E6F2E6} 36.69 & \cellcolor[HTML]{E6F2E6} 2.60 & \cellcolor[HTML]{E6F2E6} 13.70 & \cellcolor[HTML]{E6F2E6} 5.99 & \cellcolor[HTML]{FFE0CC} 0.00 \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} 1249 & \cellcolor[HTML]{E6F2E6} 16.53 & \cellcolor[HTML]{E6F2E6} 51.23 & \cellcolor[HTML]{E6F2E6} 5.75 & \cellcolor[HTML]{E6F2E6} 19.57 & \cellcolor[HTML]{E6F2E6} 10.58 & \cellcolor[HTML]{FFE0CC} 0.00 \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} 1874 & \cellcolor[HTML]{E6F2E6} 19.84 & \cellcolor[HTML]{E6F2E6} 58.01 & \cellcolor[HTML]{E6F2E6} 7.76 & \cellcolor[HTML]{E6F2E6} 23.12 & \cellcolor[HTML]{E6F2E6} 12.09 & \cellcolor[HTML]{FFE0CC} 0.00 \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} 2499 & \cellcolor[HTML]{E6F2E6} 20.52 & \cellcolor[HTML]{E6F2E6} 59.23 & \cellcolor[HTML]{E6F2E6} 8.29 & \cellcolor[HTML]{E6F2E6} 23.50 & \cellcolor[HTML]{E6F2E6} 13.39 & \cellcolor[HTML]{FFE0CC} 2.57 \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} 3749 & \cellcolor[HTML]{E6F2E6} 20.96 & \cellcolor[HTML]{E6F2E6} 60.23 & \cellcolor[HTML]{E6F2E6} 8.53 & \cellcolor[HTML]{E6F2E6} 23.30 & \cellcolor[HTML]{E6F2E6} 14.85 & \cellcolor[HTML]{FFE0CC} 1.29 \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} 4374 & \cellcolor[HTML]{E6F2E6} 22.45 & \cellcolor[HTML]{E6F2E6} 62.20 & \cellcolor[HTML]{E6F2E6} 10.55 & \cellcolor[HTML]{E6F2E6} 25.42 & \cellcolor[HTML]{E6F2E6} 15.34 & \cellcolor[HTML]{FFE0CC} 7.72 \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} 4999 & \cellcolor[HTML]{E6F2E6} 22.96 & \cellcolor[HTML]{E6F2E6} 63.56 & \cellcolor[HTML]{E6F2E6} 10.47 & \cellcolor[HTML]{E6F2E6} 26.01 & \cellcolor[HTML]{E6F2E6} 15.76 & \cellcolor[HTML]{FFE0CC} 7.72 \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} 5624 & \cellcolor[HTML]{E6F2E6} 22.82 & \cellcolor[HTML]{E6F2E6} \textbf{63.63} & \cellcolor[HTML]{E6F2E6} 10.34 & \cellcolor[HTML]{E6F2E6} 25.77 & \cellcolor[HTML]{E6F2E6} 15.61 & \cellcolor[HTML]{FFE0CC} 7.72 \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} 6250 & \cellcolor[HTML]{E6F2E6} \textbf{23.03} & \cellcolor[HTML]{E6F2E6} 63.60 & \cellcolor[HTML]{E6F2E6} \textbf{10.73} & \cellcolor[HTML]{E6F2E6} \textbf{26.00} & \cellcolor[HTML]{E6F2E6} \textbf{15.99} & \cellcolor[HTML]{FFE0CC} 6.44 \\
+		\hline
+	\end{tabular}
+	\gr
+	\captionof{table}{\gr Εξέλιξη των μετρικών αξιολόγησης για το μοντέλο \en Detectron2 R-CNN \gr ανά \en iteration}
+\end{center}
+
 \section{\gr Επιλογή Καλύτερων Μοντέλων}
 \paragraph{\textnormal{
 \gr Τα βάρη του καλύτερου μοντέλου για κάθε \en fold \gr αποθηκεύονται ξεχωριστά.}}
@@ -486,51 +567,6 @@
 }}
 \gr
 
-\chapter{\gr Μέθοδος και Μετρικές Αξιολόγησης}
-\paragraph{\textnormal{
-\gr Για την αξιολόγηση της απόδοσης των μοντέλων, χρησιμοποιήθηκαν διάφορες μετρικές που καλύπτουν διαφορετικές πτυχές της απόδοσης, παρέχοντας μια ολοκληρωμένη εικόνα των αποτελεσμάτων. Στο κεφάλαιο αυτό θα περιγραφούν οι μετρικές που χρησιμοποιήθηκαν στην παρούσα εργασία.
-}}
-
-\section{\gr Μέθοδος Αξιολόγησης}
-\paragraph{\textnormal{
-\gr Για την αξιολόγηση του μοντέλου, χρησιμοποιήθηκε \en \textbf{cross-validation} \gr στη μορφή της τεχνικής \en \textbf{k-Fold}, \gr και πιο συγκεκριμένα \en \textbf{5-Fold}, \gr όπως αναφέρθηκε και προηγουμένως. Σύμφωνα με το \en \textbf{5-Fold}, \gr τα δεδομένα χωρίζονται σε 5 τμήματα, και το μοντέλο εκπαιδεύεται και αξιολογείται σε κάθε τμήμα ξεχωριστά. Οι τελικές μετρήσεις προκύπτουν από τον μέσο όρο των αποτελεσμάτων όλων των \en folds. \gr Η χρήση του \en \textbf{5-Fold cross-validation} \gr επιτρέπει την πλήρη αξιοποίηση των δεδομένων και διασφαλίζει την αξιοπιστία των αποτελεσμάτων, μειώνοντας τον κίνδυνο για \en overfit \gr και παρέχοντας μια σταθερή εκτίμηση της απόδοσης του μοντέλου. 
-}}
-\section{\gr Μετρικές Αξιολόγησης}
-\subsection{\en Accuracy}
-\paragraph{\textnormal{
-\gr Η ακρίβεια \en (\textbf{accuracy}) \gr υπολογίζει το ποσοστό των ορθά ταξινομημένων δειγμάτων (τόσο θετικών όσο και αρνητικών) στο σύνολο των παρατηρήσεων. Υπολογίζεται ως εξής:
-\begin{center}
-	$Accuracy = \frac{True Positives + True Negatives}{True Positives + True Negatives + False Positive + False Negatives}$
-\end{center}
-Η ακρίβεια είναι μια διαισθητική μετρική, ωστόσο μπορεί να είναι λιγότερο χρήσιμη σε περιπτώσεις μη ισορροπημένων δεδομένων, όπου η μία κλάση υπερισχύει. Για το λόγο αυτό, δεν πρέπει να λαμβάνεται υπόψιν από μόνη της. Η ακρίβεια υπολογίζεται μέσω του παρακάτω τμήματος κώδικα \cite{googleMLAccuracy} \cite{balaji2023}.
-}}
-
-\subsection{\en Precision}
-\paragraph{\textnormal{
-\gr Το \en \textbf{precision} \gr εστιάζει στη θετική κλάση και μετρά το πραγματικό ποσοστό των ορθών θετικών προβλέψεων σε σχέση με το συνολικό αριθμό θετικών προβλέψεων που είναι είτε \en \textbf{true} \gr είτε \en \textbf{false}:
-\begin{center}
-	$Precision = \frac{True Positives}{True Positives + False Positives}$
-\end{center}
-\gr Το \en \textbf{precision} \gr είναι σημαντικό όταν το κόστος των ψευδώς θετικών είναι υψηλό. Και σε αυτή την περίπτωση, δεν πρέπει να λαμβάνεται υπόψιν από μόνη της, αυτή η μετρική \cite{googleMLAccuracy} \cite{balaji2023}.
-}}
-
-\subsection{\en Recall}
-\paragraph{\textnormal{
-\gr Η μετρική \en \textbf{recall} \gr υπολογίζει το ποσοστό των πραγματικών θετικών δειγμάτων που ανιχνεύθηκαν ορθά από το μοντέλο σε σχέση με το άθροισμα των πραγματικών θετικών και των ψευδών αρνητικών:
-\begin{center}
-	$Recall = \frac{True Positives}{True Positives + False Negatives}$
-\end{center}
-\gr Η \en \textbf{recall} \gr είναι ιδιαίτερα σημαντική όταν το κόστος των ψευδώς αρνητικών είναι υψηλό \cite{googleMLAccuracy} \cite{balaji2023}.
-}}
-
-\subsection{\en F1 Score}
-\paragraph{\textnormal{
-\gr Στην περίπτωση εντοπισμού αντικειμένων, το \en \textbf{F1 Score} \gr υπολογίζεται ως ο αρμονικός μέσος της ακρίβειας \en (\textbf{precision}) \gr και της ανάκλησης \en (\textbf{recall}), \gr με βάση τις προβλέψεις πλαισίων \en (\textbf{bounding boxes}). \gr Μία πρόβλεψη θεωρείται ορθή \en (\textbf{true positive}) \gr όταν το \en \textbf{IoU} (Intersection over Union) \gr μεταξύ προβλεπόμενου και πραγματικού πλαισίου είναι μεγαλύτερο από ένα κατώφλι, συνήθως 0.5.
-\begin{center}
-	$F_{1} Score = 2 \times \frac{Precision \times Recall}{Precision + Recall}$
-\end{center}
-\gr Το \en \textbf{F1 Score} \gr αποτελεί έναν συνδυασμό των δύο και είναι κατάλληλη μετρική για μη ισορροπημένα δεδομένα, καθώς εξισορροπεί τις επιδόσεις μεταξύ \en \textbf{precision} \gr και \en \textbf{recall} \cite{googleMLAccuracy} \cite{balaji2023} \cite{deepchecksMetrics2023} \cite{keylabs2024}.
-}}
 
 
 

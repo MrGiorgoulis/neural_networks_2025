@@ -549,26 +549,117 @@
 \end{center}
 
 \section{\gr Επιλογή Καλύτερων Μοντέλων}
-\paragraph{\textnormal{
-\gr Τα βάρη του καλύτερου μοντέλου για κάθε \en fold \gr αποθηκεύονται ξεχωριστά.}}
-\paragraph{}
-\begin{lstlisting}
-	best_weights = (
-		f"{project_dir}/yolov11_fold{fold_num}/weights/best.pt"
-	)
-	shutil.copy(
-		best_weights,
-		f"{project_dir}/yolov11_fold{fold_num}_best.pt"
-	)
-\end{lstlisting}
-
-\paragraph{\textnormal{
-\gr Με αυτόν τον τρόπο, τα μοντέλα με την καλύτερη απόδοση είναι δυνατό να διατηρηθούν για περαιτέρω ανάλυση. Συνολικά, η διαδικασία αποτυπώθηκε με τέτοιο τρόπο ώστε να περιλαμβάνονται οι αναλυτικές μετρήσεις για κάθε \en fold, \gr καθώς και οι καλύτεροι συνδυασμοί υπερ-παραμέτρων, όπως φαίνεται στα αποθηκευμένα \en csv \gr αρχεία.
+\subsection{\gr Επιλογή Καλύτερου Μοντέλου για το \en Fold 1}
+\paragraph{\textnormal{ \gr Αναλύοντας τα αποτελέσματα για όλα τα μοντέλα (\en \textbf{Yolov8n, Yolov11n, Yolov11m, Detectron2}) \gr στο \en \textbf{Fold 1}, \gr προκύπτει ο παρακάτω Πίνακας 6.3 .
 }}
-\gr
+{\scriptsize
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		\cellcolor[HTML]{CCE5E5} \textbf{Model} &
+		\cellcolor[HTML]{CCE5E5} \textbf{mAP50} &
+		\cellcolor[HTML]{CCE5E5} \textbf{mAP50-95} &
+		\cellcolor[HTML]{CCE5E5} \textbf{Val Box Loss} &
+		\cellcolor[HTML]{CCE5E5} \textbf{Val Cls Loss} &
+		\cellcolor[HTML]{CCE5E5} \textbf{Precision} &
+		\cellcolor[HTML]{CCE5E5} \textbf{Recall} \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Yolov8n & \cellcolor[HTML]{E6F2E6} 0.75616 & \cellcolor[HTML]{E6F2E6} 0.3363 & \cellcolor[HTML]{E6F2E6} 1.90664 & \cellcolor[HTML]{E6F2E6} 1.20159 & \cellcolor[HTML]{E6F2E6} 0.77565 & \cellcolor[HTML]{FFE0CC} 0.69992 \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Yolov11n & \cellcolor[HTML]{E6F2E6} 0.75954 & \cellcolor[HTML]{E6F2E6} 0.3346 & \cellcolor[HTML]{E6F2E6} 1.92994 & \cellcolor[HTML]{E6F2E6} 1.21736 & \cellcolor[HTML]{E6F2E6} 0.77941 & \cellcolor[HTML]{FFE0CC} 0.69992 \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Yolov11m & \cellcolor[HTML]{E6F2E6} 0.76746 & \cellcolor[HTML]{E6F2E6} 0.3402 & \cellcolor[HTML]{E6F2E6} 1.93944 & \cellcolor[HTML]{E6F2E6} 1.22461 & \cellcolor[HTML]{E6F2E6} 0.78162 & \cellcolor[HTML]{FFE0CC} 0.69992 \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Detectron2 & \cellcolor[HTML]{E6F2E6} - & \cellcolor[HTML]{E6F2E6} - & \cellcolor[HTML]{E6F2E6} - & \cellcolor[HTML]{E6F2E6} - & \cellcolor[HTML]{E6F2E6} Accuracy: 0.9453 & \cellcolor[HTML]{FFE0CC} False Neg: 0.09526 \\
+		\hline
+	\end{tabular}
+	\gr 
+	\captionof{table}{\gr Συνοπτική Σύγκριση των Μοντέλων}
+\end{center}
+}
+\paragraph{\textnormal{
+\gr Παρατηρείται ότι το \en \textbf{Yolov11m} \gr εμφανίζει το υψηλότερο \en \textbf{mAP50} (0.76746) \gr και \en \textbf{mAP50-95} (0.3402), \gr που αποτελούν τις πιο αξιόπιστες μετρικές για \en \textbf{object detection}, \gr υπερβαίνοντας τόσο το \en \textbf{Yolov8n} \gr όσο και το \en \textbf{Yolov11n}. \gr Στη συνέχεια, το \en \textbf{Yolov11n} \gr έχει ελαφρώς καλύτερο \en \textbf{mAP50} \gr από το \en \textbf{Yolov8n}, \gr αλλά υστερεί έναντι του \en \textbf{Yolov11m}.
+\gr Συνολικά όλα τα \en \textbf{YOLO} \gr μοντέλα έχουν παρόμοιο \en \textbf{recall} (0.69992), \gr αλλά το \en \textbf{Yolov11m} \gr έχει και το υψηλότερο \en \textbf{precision} (0.78162). \gr Οι απώλειες (\en \textbf{losses}) \gr είναι πολύ κοντά μεταξύ των \en \textbf{YOLO} \gr μοντέλων, χωρίς σημαντική διαφοροποίηση που να αναιρεί την υπεροχή του \en \textbf{Yolov11m} \gr στη βασική μετρική \en \textbf{mAP}. \gr Το \en \textbf{Detectron2} \gr δεν παρέχει \en \textbf{mAP50/mAP50-95}, \gr που αποτελεί το \en industry standard \gr για \en \textbf{object detection}, \gr οπότε δεν μπορεί να συγκριθεί άμεσα με τα \en \textbf{YOLO} \gr μοντέλα ως προς αυτή τη βασική μετρική. Αν και έχει υψηλό \en \textbf{classification accuracy} (0.9453), \gr αυτό δεν αρκεί για να κριθεί καλύτερο σε \en \textbf{object detection},\gr όπου η χωρική ακρίβεια \en (\textbf{mAP}) \gr είναι κρίσιμη.
+}}
+\paragraph{\textnormal{
+\gr Συμπερασματικά, το \en \textbf{Yolov11m} \gr είναι το καλύτερο μοντέλο για το \en \textbf{Fold 1}, \gr καθώς υπερέχει στις βασικές μετρικές \en object detection (\textbf{mAP50, mAP50-95, precision}).
+}}
 
+\subsection{\gr Επιλογή Καλύτερου Μοντέλου για το \en Fold 2}
+\paragraph{\textnormal{
+\gr Αναλύοντας τα αποτελέσματα για όλα τα μοντέλα (\en \textbf{Yolov8n, Yolov11n, Yolov11m, Detectron2}) \gr στο \en \textbf{Fold 2}, \gr προκύπτει ο παρακάτω Πίνακας 6.4.
+}}
+{\scriptsize
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+		\hline
+		\cellcolor[HTML]{CCE5E5} \textbf{Model} &
+		\cellcolor[HTML]{CCE5E5} \textbf{mAP50} &
+		\cellcolor[HTML]{CCE5E5} \textbf{mAP50-95} &
+		\cellcolor[HTML]{CCE5E5} \textbf{Precision} &
+		\cellcolor[HTML]{CCE5E5} \textbf{Recall} &
+		\cellcolor[HTML]{CCE5E5} \textbf{F1} &
+		\cellcolor[HTML]{CCE5E5} \textbf{Accuracy} &
+		\cellcolor[HTML]{CCE5E5} \textbf{False Neg} &
+		\cellcolor[HTML]{CCE5E5} \textbf{False Pos} \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Yolov8n & \cellcolor[HTML]{E6F2E6} 0.75507 & \cellcolor[HTML]{E6F2E6} 0.33642 & \cellcolor[HTML]{E6F2E6} 0.77109 & \cellcolor[HTML]{E6F2E6} 0.68028 & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Yolov11n & \cellcolor[HTML]{E6F2E6} 0.73618 & \cellcolor[HTML]{E6F2E6} 0.32413 & \cellcolor[HTML]{E6F2E6} 0.75859 & \cellcolor[HTML]{E6F2E6} 0.67134 & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Yolov11m & \cellcolor[HTML]{E6F2E6} 0.75385 & \cellcolor[HTML]{E6F2E6} 0.33542 & \cellcolor[HTML]{E6F2E6} 0.77558 & \cellcolor[HTML]{E6F2E6} 0.68282 & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Detectron2 & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} 0.773 & \cellcolor[HTML]{E6F2E6} 0.662 & \cellcolor[HTML]{E6F2E6} 0.713 & \cellcolor[HTML]{E6F2E6} 0.946 & \cellcolor[HTML]{E6F2E6} 0.091 & \cellcolor[HTML]{E6F2E6} 0.072 \\
+		\hline
+	\end{tabular}
+\gr 
+\captionof{table}{\gr Συνοπτική Σύγκριση των Μοντέλων στο \en Fold 2}
+\end{center}
+}
+\paragraph{\textnormal{
+\gr Παρατηρείται ότι το \en \textbf{Yolov8n} \gr εμφανίζει το υψηλότερο \en \textbf{mAP50} (0.75507) \gr και \en \textbf{mAP50-95} (0.33642), \gr που αποτελούν τις πιο αξιόπιστες μετρικές για \en \textbf{object detection}, \gr όπως αναφέρθηκε και προηγουμένως, με το \en \textbf{Yolov11m} \gr να ακολουθεί πολύ κοντά \en (\textbf{mAP50} 0.75385, \textbf{mAP50-95} 0.33542) \gr και να υπερτερεί ελαφρώς σε \en \textbf{precision} \gr και \en \textbf{recall}. \gr Το \en \textbf{Detectron2} \gr έχει \en \textbf{precision} (0.773) \gr και \en \textbf{recall} (0.662), \gr τιμές παρόμοιες με τα \en \textbf{YOLO} \gr μοντέλα, \gr άρα βασικό καλύτερο υποψήφιο μοντέλο. \gr Η συνολική του ακρίβεια \en (\textbf{accuracy} 0.946) \gr είναι επίσης υψηλή.
+}}
+\paragraph{\textnormal{
+\gr Συμπερασματικά, το \en \textbf{Yolov8n} \gr παραμένει το καλύτερο μοντέλο για το \en \textbf{Fold 2}, \gr καθώς υπερέχει οριακά στις βασικές μετρικές του \en object detection (\textbf{mAP50, mAP50-95}), \gr με το \en \textbf{Yolov11m} \gr να ακολουθεί πολύ κοντά κυρίως σε \en \textbf{precision} \gr και \en \textbf{recall}. 
+}}
 
-
+\subsection{\gr Επιλογή Καλύτερου Μοντέλου για το \en Fold 3}
+\paragraph{\textnormal{
+\gr Αναλύοντας τα αποτελέσματα για όλα τα μοντέλα (\en \textbf{Yolov8n, Yolov11n, Yolov11m, Detectron2}) \gr στο \en \textbf{Fold 3}, \gr προκύπτει ο παρακάτω Πίνακας 6.5.
+}}
+{\scriptsize
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+		\hline
+		\cellcolor[HTML]{CCE5E5} \textbf{Model} &
+		\cellcolor[HTML]{CCE5E5} \textbf{mAP50} &
+		\cellcolor[HTML]{CCE5E5} \textbf{mAP50-95} &
+		\cellcolor[HTML]{CCE5E5} \textbf{Precision} &
+		\cellcolor[HTML]{CCE5E5} \textbf{Recall} &
+		\cellcolor[HTML]{CCE5E5} \textbf{F1} &
+		\cellcolor[HTML]{CCE5E5} \textbf{Accuracy} &
+		\cellcolor[HTML]{CCE5E5} \textbf{False Neg} &
+		\cellcolor[HTML]{CCE5E5} \textbf{False Pos} \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Yolov8n & \cellcolor[HTML]{E6F2E6} 0.76740 & \cellcolor[HTML]{E6F2E6} 0.33519 & \cellcolor[HTML]{E6F2E6} 0.80039 & \cellcolor[HTML]{E6F2E6} 0.68953 & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Yolov11n & \cellcolor[HTML]{E6F2E6} 0.76503 & \cellcolor[HTML]{E6F2E6} 0.33784 & \cellcolor[HTML]{E6F2E6} 0.77764 & \cellcolor[HTML]{E6F2E6} 0.69915 & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Yolov11m & \cellcolor[HTML]{E6F2E6} 0.76395 & \cellcolor[HTML]{E6F2E6} 0.33601 & \cellcolor[HTML]{E6F2E6} 0.78212 & \cellcolor[HTML]{E6F2E6} 0.69812 & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- \\
+		\hline
+		\cellcolor[HTML]{FFE0CC} Detectron2 & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} -- & \cellcolor[HTML]{E6F2E6} 0.818 & \cellcolor[HTML]{E6F2E6} 0.701 & \cellcolor[HTML]{E6F2E6} 0.755 & \cellcolor[HTML]{E6F2E6} 0.955 & \cellcolor[HTML]{E6F2E6} 0.072 & \cellcolor[HTML]{E6F2E6} 0.068 \\
+		\hline
+	\end{tabular}
+	\gr 
+	\captionof{table}{\gr Συνοπτική Σύγκριση των Μοντέλων στο \en Fold 3}
+\end{center}
+}
+\paragraph{\textnormal{
+\gr Παρατηρείται ότι το \en \textbf{Detectron2} \gr εμφανίζει το υψηλότερο \en \textbf{precision} (0.818), \en \textbf{recall} (0.701) \gr και \en \textbf{f1-score} (0.755), \gr υπερβαίνοντας τα μοντέλα \en \textbf{YOLO} \gr σε όλες τις βασικές μετρικές ταξινόμησης. \gr Παρόλο που δεν παρέχει \en \textbf{mAP} \gr μετρικές, η συνολική του απόδοση είναι ανώτερη σε αυτό το \en \textbf{fold}. \gr Επομένως, το \en \textbf{Detectron2} \gr αποτελεί την πιο αξιόπιστη επιλογή για το \en \textbf{Fold 3}.
+}}
+\paragraph{\textnormal{
+\gr Συμπερασματικά, το \en \textbf{Detectron2} \gr είναι το καλύτερο μοντέλο για το \en \textbf{Fold 3}, \gr καθώς υπερέχει στις βασικές μετρικές \en precision, recall \gr και \en f1-score, \gr παρότι δεν υπολογίζει mAP.
+}}
 
 \begin{thebibliography}{8}
 \en 
